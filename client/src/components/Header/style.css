@@ -1,9 +1,24 @@
 .Header {
-  background-color: #749f89;
+  display: flex;
+  flex-direction: row;
   height: 34px;
   padding: 7px 20px;
+  font-size: 18px;
+}
+
+.Header > * {
+  flex-grow: 1;
+}
+
+.Header_blogName {
+  color: #979797;
+  text-align: left;
 }
 
 .Header_logo {
-  height: 100%;
+  text-align: center;
+}
+
+.Header_help {
+  text-align: right;
 }
