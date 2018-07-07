@@ -4,7 +4,7 @@ The platform for bloggers who never wanted a blogging platform in the first plac
 
 ## Why would I want it?
 
-Blogless is for writing, not for reading. Readers interact with your website, which serves content you wrote on Blogless. This enables you to completely control the user experience, without building your own infrastructure, or messing about with deploying static content for every new post.
+Blogless is for writing, not for reading. Readers interact with your website, which serves content you wrote on Blogless. This enables you to completely control the user experience, without building your own infrastructure, patching a CMS, or messing about with deploying static content for every new post.
 
 ## Who will this be for?
 
