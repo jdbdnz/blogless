@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "antd";
-import logo from "./logo.png";
 import "./style.css";
 
 const Presenter = () => {

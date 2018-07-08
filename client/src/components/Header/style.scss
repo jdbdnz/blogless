@@ -1,3 +1,5 @@
+@import "shared.scss";
+
 .Header {
   display: flex;
   flex-direction: row;
@@ -11,14 +13,16 @@
 }
 
 .Header_blogName {
-  color: #979797;
+  color: $grey;
   text-align: left;
 }
 
 .Header_logo {
   text-align: center;
+  color: $black;
 }
 
 .Header_help {
   text-align: right;
+  color: $black;
 }
