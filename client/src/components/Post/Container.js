@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Post from "./Presenter";
 import axios from "axios";
 
@@ -29,5 +30,13 @@ class Container extends React.Component {
     return <Post post={this.state.post} />;
   }
 }
+
+Container.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }).isRequired
+  }).isRequired
+};
 
 export default Container;
