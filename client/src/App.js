@@ -11,8 +11,10 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header />
-          <Route exact path="/" component={Posts} />
-          <Route path="/posts/:id" component={Post} />
+          <div className="container">
+            <Route exact path="/" component={Posts} />
+            <Route path="/posts/:id" component={Post} />
+          </div>
         </div>
       </Router>
     );

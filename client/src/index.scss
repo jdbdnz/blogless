@@ -6,3 +6,19 @@ body {
   margin: 0;
   padding: 0;
 }
+
+a {
+  color: $green;
+  &:hover,
+  &:focus {
+    color: lighten($green, 20%);
+  }
+  &:active {
+    color: $yellow;
+  }
+}
+
+.container {
+  margin: 100px auto;
+  max-width: $maxWidth;
+}

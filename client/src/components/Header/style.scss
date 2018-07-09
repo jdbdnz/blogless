@@ -6,6 +6,8 @@
   height: 34px;
   padding: 7px 20px;
   font-size: 18px;
+  max-width: $maxWidth;
+  margin: 0 auto;
 }
 
 .Header > * {
@@ -13,7 +15,7 @@
 }
 
 .Header_blogName {
-  color: $grey;
+  color: $green;
   text-align: left;
 }
 
