@@ -1,7 +1,6 @@
 @import "shared.scss";
 
 body {
-  font-family: Georgia, Times, "Times New Roman", serif;
   color: $black;
   margin: 0;
   padding: 0;
@@ -19,6 +18,7 @@ a {
 }
 
 .container {
-  margin: 100px auto;
+  margin: 10px auto;
   max-width: $maxWidth;
+  padding: 7px 20px;
 }
