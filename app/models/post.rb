@@ -1,4 +1,4 @@
 class Post < ApplicationRecord
   belongs_to :blog, required: true
-  validates :title, presence: true
+  validates :draft_title, presence: true
 end

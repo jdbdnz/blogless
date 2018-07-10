@@ -4,5 +4,5 @@
 2.times do
   blog = FactoryBot.create :fake_blog
   FactoryBot.create :fake_post, blog: blog
-  FactoryBot.create :fake_post, blog: blog, draft: false
+  FactoryBot.create :fake_post_published, blog: blog
 end
