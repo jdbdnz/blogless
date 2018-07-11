@@ -16,7 +16,7 @@ Firstly, it's for me: I want to use a CDN to serve my blog, but I don't want to 
 
 ## My vision for the workflow
 
-### Easy Installation
+### Easy option
 
 1.  create a free account
 1.  write first post
@@ -25,11 +25,24 @@ Firstly, it's for me: I want to use a CDN to serve my blog, but I don't want to 
 1.  enable Github pages, and navigate to `<username>.github.io/<repo>` to view their first post
 1.  edit HTML/CSS of template to their taste
 
-### Other options
+### More difficult options
 
 1.  build your own template. From scratch, or using a boiler plate (a node package to create this would be cool)
 1.  Literally anything you like, it's an API after all
 
 ## Is it ready yet?
 
-No. In fact, I'm surprised you're reading this. I've barely started. If you like the vision and want to see it happen sooner, reach out to me to see how you can help. Or just give me a star. Stars are nice too.
+No, sorry! If you'd like to see it happen sooner, consider contributing.
+
+## Running locally
+
+1.  Ensure `ruby`, `bundler`, `npm`, and `yarn` are installed
+1.  `bundle install` && `cd client` && `yarn install`
+1.  In separate terminals
+    1.  `rails s -p 3001`
+    1.  `yarn start`
+
+## To run tests
+
+1.  test Rails with `rake`
+1.  test React with `yarn run test`
