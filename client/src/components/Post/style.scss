@@ -1,3 +1,32 @@
+@import "shared.scss";
+
 .Post {
-  padding: 20px;
+  padding: 20px 0;
+  color: $black;
+  display: flex;
+  flex-flow: column;
+  height: calc(100vh - 40px);
+}
+
+.Post-title {
+  font-weight: 900;
+  font-size: 2em;
+}
+
+.Post-body {
+  font-family: $serif;
+  margin-top: 10px;
+  resize: none;
+  height: 100%;
+}
+
+.Post-title,
+.Post-body {
+  padding: 4px 11px;
+  width: 100%;
+  border: 0;
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
 }

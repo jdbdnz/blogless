@@ -1,3 +1,10 @@
+@import "shared.scss";
+
 .Posts-Post {
-  padding: 20px;
+  padding: 20px 3px;
+}
+
+.Posts-Post_title {
+  font-size: 1.2em;
+  font-family: $serif;
 }

@@ -1,37 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Post from "./Presenter";
-import axios from "axios";
+import NoPost from "./NoPost";
 
-class Container extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      post: {
-        id: props.match.params.id,
-        title: "",
-        body: ""
-      }
-    };
-  }
+const PostContainer = props => {
+  const postId = props.match.params.id;
+  const post = props.posts.find(p => `${p.id}` === postId);
+  return post ? <Post post={post} /> : <NoPost />;
+};
 
-  componentDidMount() {
-    axios
-      .get(`/api/v1/posts/${this.state.post.id}.json`)
-      .then(response => {
-        this.setState({
-          post: response.data
-        });
-      })
-      .catch(error => console.log(error));
-  }
-
-  render() {
-    return <Post post={this.state.post} />;
-  }
-}
-
-Container.propTypes = {
+PostContainer.propTypes = {
+  posts: PropTypes.array.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
@@ -39,4 +19,8 @@ Container.propTypes = {
   }).isRequired
 };
 
-export default Container;
+const mapStateToProps = state => ({
+  posts: state.posts.toJS()
+});
+
+export default connect(mapStateToProps)(PostContainer);

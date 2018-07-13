@@ -1,24 +1,27 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
 
-import Posts from "./components/Posts";
-import Post from "./components/Post";
-import Header from "./components/Header";
+import { addPosts } from "./actions";
+import AppRouter from "./components/AppRouter";
 
-class App extends Component {
+export class App extends Component {
+  componentDidMount() {
+    axios
+      .get("/api/v1/posts.json")
+      .then(response => {
+        this.props.dispatch(addPosts(response.data));
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Header />
-          <div className="container">
-            <Route exact path="/" component={Posts} />
-            <Route path="/posts/:id" component={Post} />
-          </div>
-        </div>
-      </Router>
+      <div className="App">
+        <AppRouter />
+      </div>
     );
   }
 }
 
-export default App;
+export default connect()(App);

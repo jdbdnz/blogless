@@ -1,29 +1,23 @@
-import React from "react";
+import { connect } from "react-redux";
 import Posts from "./Presenter";
-import axios from "axios";
 
-class Container extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: []
-    };
+const filterPosts = (posts, filter) => {
+  const terms = filter.split(" ").filter(x => x);
+  if (terms.length) {
+    const filteredPosts = posts.filter(post => {
+      const matchingTerms = terms.filter(term => {
+        return post.title.includes(term) || post.body.includes(term);
+      });
+      return matchingTerms.length;
+    });
+    return filteredPosts;
+  } else {
+    return posts;
   }
+};
 
-  componentDidMount() {
-    axios
-      .get("/api/v1/posts.json")
-      .then(response => {
-        this.setState({
-          posts: response.data
-        });
-      })
-      .catch(error => console.log(error));
-  }
+const mapStateToProps = state => ({
+  posts: filterPosts(state.posts.toJS(), state.postFilter)
+});
 
-  render() {
-    return <Posts posts={this.state.posts} />;
-  }
-}
-
-export default Container;
+export default connect(mapStateToProps)(Posts);
