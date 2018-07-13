@@ -23,12 +23,9 @@ ActiveRecord::Schema.define(version: 2018_07_05_234748) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "draft_title", null: false
-    t.text "draft_body"
-    t.string "published_title"
-    t.text "published_body"
+    t.string "title", null: false
+    t.text "body"
     t.datetime "published_at"
-    t.datetime "last_published_at"
     t.bigint "blog_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
