@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 
-import { addPosts } from "./actions";
 import AppRouter from "./components/AppRouter";
+import API from "./api";
 
 export class App extends Component {
   componentDidMount() {
-    axios
-      .get("/api/v1/posts.json")
-      .then(response => {
-        this.props.dispatch(addPosts(response.data));
-      })
-      .catch(error => console.log(error));
+    API.posts.get(this.props.dispatch);
   }
 
   render() {
