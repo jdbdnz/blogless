@@ -1,31 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setPostFilter } from "../../../actions";
+import { selector, setFilter } from "../../../ducks/posts";
 
 import FilterPresenter from "./Presenter";
 
 const Filter = props => {
   const onFilter = e => {
-    props.dispatch(setPostFilter(e.target.value));
+    props.dispatch(setFilter(e.target.value));
   };
 
   const clearFilter = () => {
-    props.dispatch(setPostFilter(""));
+    props.dispatch(setFilter(""));
   };
 
   return (
     <FilterPresenter
       onFilter={onFilter}
       clearFilter={clearFilter}
-      currentFilter={props.currentFilter}
+      filter={props.filter}
     />
   );
 };
 
 const mapStateToProps = state => {
-  return {
-    currentFilter: state.postFilter
-  };
+  const filter = selector.getFilter(state);
+  return { filter };
 };
 
 export default connect(mapStateToProps)(Filter);

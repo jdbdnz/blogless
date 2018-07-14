@@ -12,7 +12,7 @@ class Presenter extends React.Component {
           onChange={this.props.onFilter}
           ref={node => (this.filterInput = node)}
           suffix={
-            this.props.currentFilter && (
+            this.props.filter && (
               <Icon
                 type="close"
                 onClick={() => {
@@ -30,9 +30,9 @@ class Presenter extends React.Component {
 }
 
 Presenter.propTypes = {
-  currentFilter: PropTypes.string.isRequired,
-  onFilter: PropTypes.func.isRequired,
-  clearFilter: PropTypes.func.isRequired
+  clearFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  onFilter: PropTypes.func.isRequired
 };
 
 export default Presenter;

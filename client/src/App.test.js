@@ -16,7 +16,7 @@ describe("<App />", () => {
   afterEach(() => moxios.uninstall());
 
   const dispatch = spy();
-  const initialState = { posts: fromJS([]), postFilter: "" };
+  const initialState = { posts: fromJS({ posts: [], filter: "" }) };
   const reducer = state => state;
   const store = { ...createStore(reducer, initialState), dispatch };
 

@@ -5,16 +5,15 @@ import { merge } from "lodash";
 
 import Post from "./Presenter";
 import NoPost from "./NoPost";
-import { editPost } from "../../actions";
+import { selector, updatePost } from "../../ducks/posts";
 
 const PostContainer = props => {
   const id = props.match.params.id;
-  const post = props.posts.find(p => `${p.id}` === id);
-  return post ? (
+  return props.post ? (
     <Post
-      post={post}
+      post={props.post}
       onChange={attributes => {
-        const action = editPost(merge(attributes, { id }));
+        const action = updatePost(merge(attributes, { id }));
         props.dispatch(action);
       }}
     />
@@ -24,7 +23,7 @@ const PostContainer = props => {
 };
 
 PostContainer.propTypes = {
-  posts: PropTypes.array.isRequired,
+  post: PropTypes.object,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
@@ -32,8 +31,9 @@ PostContainer.propTypes = {
   }).isRequired
 };
 
-const mapStateToProps = state => ({
-  posts: state.posts.toJS()
-});
+const mapStateToProps = (state, props) => {
+  const post = selector.getPost(state, props.match.params.id);
+  return { post };
+};
 
 export default connect(mapStateToProps)(PostContainer);

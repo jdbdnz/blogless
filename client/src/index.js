@@ -5,7 +5,7 @@ import { applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
 import "antd/dist/antd.css";
 
-import reducer from "./reducers";
+import reducer from "./ducks";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";

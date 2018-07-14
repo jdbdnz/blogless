@@ -13,19 +13,21 @@ import NoPosts from "./NoPosts";
 describe("<Posts />", () => {
   describe("when there are Posts", () => {
     const initialState = {
-      postFilter: "",
-      posts: fromJS([
-        {
-          id: 1,
-          title: "A really compelling blog post!",
-          body: "Gosh you're a good reader!"
-        },
-        {
-          id: 2,
-          title: "Just as compelling a post!",
-          body: "Gosh I'm a good writer!"
-        }
-      ])
+      posts: fromJS({
+        posts: [
+          {
+            id: 1,
+            title: "A really compelling blog post!",
+            body: "Gosh you're a good reader!"
+          },
+          {
+            id: 2,
+            title: "Just as compelling a post!",
+            body: "Gosh I'm a good writer!"
+          }
+        ],
+        filter: ""
+      })
     };
 
     it("renders Posts", () => {
@@ -45,8 +47,10 @@ describe("<Posts />", () => {
 
   describe("when there are no Posts", () => {
     const initialState = {
-      postFilter: "",
-      posts: fromJS([])
+      posts: fromJS({
+        posts: [],
+        filter: ""
+      })
     };
 
     it("renders NoPosts", () => {
