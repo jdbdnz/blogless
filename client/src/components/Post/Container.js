@@ -1,26 +1,49 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { merge } from "lodash";
+import { merge, debounce } from "lodash";
 
+import API from "../../api";
 import Post from "./Presenter";
 import NoPost from "./NoPost";
 import { selector, updatePost } from "../../ducks/posts";
 
-const PostContainer = props => {
-  const id = props.match.params.id;
-  return props.post ? (
-    <Post
-      post={props.post}
-      onChange={attributes => {
-        const action = updatePost(merge(attributes, { id }));
-        props.dispatch(action);
-      }}
-    />
-  ) : (
-    <NoPost />
-  );
-};
+class PostContainer extends React.Component {
+  onChange = attributes => {
+    const mergeAttributes = merge(attributes, {
+      id: this.props.post.id,
+      persistingStatus: "pending"
+    });
+    const action = updatePost(mergeAttributes);
+    this.props.dispatch(action);
+  };
+
+  patchToServer = debounce(() => {
+    const id = this.props.post.id;
+    const callback = () => {
+      const action = updatePost({
+        id,
+        persistingStatus: undefined
+      });
+      this.props.dispatch(action);
+    };
+    API.posts.patch(this.props.dispatch, this.props.post, callback);
+  }, 500);
+
+  componentDidUpdate() {
+    if (this.props.post.persistingStatus === "pending") {
+      this.patchToServer();
+    }
+  }
+
+  render() {
+    return this.props.post ? (
+      <Post post={this.props.post} onChange={this.onChange} />
+    ) : (
+      <NoPost />
+    );
+  }
+}
 
 PostContainer.propTypes = {
   post: PropTypes.object,

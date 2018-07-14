@@ -11,6 +11,16 @@ const get = (dispatch, callback = () => {}) => {
     .catch(error => console.log(error));
 };
 
+const patch = (dispatch, post, callback = () => {}) => {
+  axios
+    .patch(`/api/v1/posts/${post.id}.json`, { post })
+    .then(response => {
+      callback();
+    })
+    .catch(error => console.log(error));
+};
+
 export default {
-  get
+  get,
+  patch
 };

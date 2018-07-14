@@ -24,10 +24,14 @@ class Presenter extends React.Component {
             </Link>
           </div>
           <div style={{ textAlign: "right" }}>
-            {this.state.draft ? (
-              <Button type="normal">Publish</Button>
+            {post.persistingStatus ? (
+              <Button type="normal" disabled>
+                Publish <Icon type="loading" />
+              </Button>
             ) : (
-              <Button type="normal">Unpublish</Button>
+              <Button type="normal" onClick={this.onChange("publish")}>
+                Publish
+              </Button>
             )}
           </div>
         </header>
