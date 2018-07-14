@@ -6,11 +6,11 @@ import "./style.css";
 class Presenter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { draft: false };
+    this.state = { draft: !props.post.published_at };
   }
 
-  onChange = draft => {
-    this.setState({ draft });
+  onChange = field => {
+    return e => this.props.onChange({ [field]: e.target.value });
   };
 
   render() {
@@ -25,13 +25,9 @@ class Presenter extends React.Component {
           </div>
           <div style={{ textAlign: "right" }}>
             {this.state.draft ? (
-              <Button type="normal" onClick={() => this.onChange(false)}>
-                Publish
-              </Button>
+              <Button type="normal">Publish</Button>
             ) : (
-              <Button type="normal" disabled>
-                Publish
-              </Button>
+              <Button type="normal">Unpublish</Button>
             )}
           </div>
         </header>
@@ -41,12 +37,12 @@ class Presenter extends React.Component {
             className="Post-title"
             defaultValue={post.title}
             placeholder="Title"
-            onChange={() => this.onChange(true)}
+            onChange={this.onChange("title")}
           />
           <textarea
             className="Post-body"
             placeholder="Once upon a blog..."
-            onChange={() => this.onChange(true)}
+            onChange={this.onChange("body")}
             defaultValue={post.body}
           />
         </div>

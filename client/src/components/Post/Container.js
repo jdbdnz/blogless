@@ -1,13 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { merge } from "lodash";
+
 import Post from "./Presenter";
 import NoPost from "./NoPost";
+import { editPost } from "../../actions";
 
 const PostContainer = props => {
-  const postId = props.match.params.id;
-  const post = props.posts.find(p => `${p.id}` === postId);
-  return post ? <Post post={post} /> : <NoPost />;
+  const id = props.match.params.id;
+  const post = props.posts.find(p => `${p.id}` === id);
+  return post ? (
+    <Post
+      post={post}
+      onChange={attributes => {
+        const action = editPost(merge(attributes, { id }));
+        props.dispatch(action);
+      }}
+    />
+  ) : (
+    <NoPost />
+  );
 };
 
 PostContainer.propTypes = {
