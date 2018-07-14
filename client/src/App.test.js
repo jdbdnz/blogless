@@ -10,6 +10,7 @@ import { fromJS } from "immutable";
 
 import App from "./App";
 import AppRouter from "./components/AppRouter";
+import Loading from "./components/Loading";
 
 describe("<App />", () => {
   beforeEach(() => moxios.install());
@@ -20,12 +21,22 @@ describe("<App />", () => {
   const reducer = state => state;
   const store = { ...createStore(reducer, initialState), dispatch };
 
-  it("renders AppRouter", () => {
+  it("renders Loading", () => {
     const wrapper = mount(
       <Provider store={store}>
         <App />
       </Provider>
     );
+    expect(wrapper.find(Loading).exists()).to.true;
+  });
+
+  xit("renders AppRouter", () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    // TODO: moxios return
     expect(wrapper.find(AppRouter).exists()).to.true;
   });
 });
