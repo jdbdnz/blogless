@@ -2,7 +2,8 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
 2.times do
-  blog = FactoryBot.create :fake_blog
+  user = FactoryBot.create :fake_user
+  blog = FactoryBot.create :fake_blog, user: user
   FactoryBot.create :fake_post, blog: blog
   FactoryBot.create :fake_post_published, blog: blog
 end
