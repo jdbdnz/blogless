@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :posts
       resources :blogs
+      post 'user/token' => 'user_token#create'
+      get 'users/current' => 'users#current'
     end
+
   end
 end

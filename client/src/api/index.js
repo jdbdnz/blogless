@@ -1,7 +1,9 @@
 import posts from "./posts";
+import session from "./session";
 
 const API = {
-  posts
+  posts,
+  session
 };
 
 export default API;

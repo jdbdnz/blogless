@@ -5,6 +5,7 @@ import { expect } from "chai";
 import { mount } from "enzyme";
 import { spy } from "sinon";
 import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
 import { createStore } from "redux";
 import { fromJS } from "immutable";
 
@@ -17,14 +18,19 @@ describe("<App />", () => {
   afterEach(() => moxios.uninstall());
 
   const dispatch = spy();
-  const initialState = { posts: fromJS({ posts: [], filter: "" }) };
+  const initialState = {
+    posts: fromJS({ posts: [], filter: "" }),
+    auth: fromJS({ currentUser: {} })
+  };
   const reducer = state => state;
   const store = { ...createStore(reducer, initialState), dispatch };
 
   it("renders Loading", () => {
     const wrapper = mount(
       <Provider store={store}>
-        <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </Provider>
     );
     expect(wrapper.find(Loading).exists()).to.true;

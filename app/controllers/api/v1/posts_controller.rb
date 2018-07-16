@@ -1,12 +1,13 @@
 module Api
   module V1
     class PostsController < ApplicationController
+      # before_action :set_blog, only: [:index]
       before_action :set_post, only: [:show, :update, :destroy]
+      # before_action :authenticate_user, except: [:index, :show]
 
       # GET /api/v1/posts
       def index
-        @posts = Post.all
-
+        @posts = Post.all #@blog.posts
         render json: @posts
       end
 
@@ -44,6 +45,10 @@ module Api
         # Use callbacks to share common setup or constraints between actions.
         def set_post
           @post = Post.find(params[:id])
+        end
+
+        def set_blog
+          @blog = Blog.find(params[:blog_id])
         end
 
         # Only allow a trusted parameter "white list" through.
