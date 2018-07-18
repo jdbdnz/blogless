@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Posts", type: :request do
   let(:user) { FactoryBot.create :user }
+  let(:blog) { FactoryBot.create :blog, user: user }
   let(:authenticated_header) do
     token = Knock::AuthToken.new(payload: { sub: user.id }).token
     { 'Authorization': "Bearer #{token}" }
@@ -9,7 +10,7 @@ RSpec.describe "Posts", type: :request do
 
   describe "GET /posts" do
     it "works! (now write some real specs)" do
-      get api_v1_posts_path, headers: authenticated_header
+      get api_v1_posts_path(blog_id: blog.id), headers: authenticated_header
       expect(response).to have_http_status(200)
     end
   end
