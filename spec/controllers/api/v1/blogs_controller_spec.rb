@@ -35,7 +35,7 @@ RSpec.describe Api::V1::BlogsController, type: :controller do
         blog2,
       ].to_json
 
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.body).to eq expected_json
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe Api::V1::BlogsController, type: :controller do
     it "returns a success response" do
       blog = FactoryBot.create :blog, user: user
       get :show, params: {id: blog.to_param}
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.body).to eq blog.to_json
     end
   end
