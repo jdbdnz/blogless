@@ -9,7 +9,8 @@ class Post < ApplicationRecord
       id: self.id,
       title: self.title,
       body: self.body,
-      published_at: self.published_at
+      published_at: self.published_at,
+      blog_id: self.blog_id
     }
   end
 end
