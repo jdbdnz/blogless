@@ -11,7 +11,7 @@ module Api
       # POST /api/v1/user
       def create
         if current_user
-          render json: current_user, status: :forbidden
+          render json: current_user, status: :forbidden and return
         end
 
         @user = User.new(user_params)
