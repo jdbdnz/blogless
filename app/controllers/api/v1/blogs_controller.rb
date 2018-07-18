@@ -1,11 +1,12 @@
 module Api
   module V1
-    class BlogsController < ApplicationController
+    class BlogsController < ::ApplicationController
+      before_action :authenticate_user
       before_action :set_blog, only: [:show, :update, :destroy]
 
       # GET /api/v1/blogs
       def index
-        @blogs = Blog.all
+        @blogs = current_user.blogs
 
         render json: @blogs
       end
@@ -20,7 +21,7 @@ module Api
         @blog = Blog.new(blog_params)
 
         if @blog.save
-          render json: @blog, status: :created, location: @blog
+          render json: @blog, status: :created, location: api_v1_blog_url(@blog)
         else
           render json: @blog.errors, status: :unprocessable_entity
         end
@@ -43,12 +44,12 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_blog
-          @blog = Blog.find(params[:id])
+          @blog = current_user.blogs.find(params[:id])
         end
 
         # Only allow a trusted parameter "white list" through.
         def blog_params
-          params.require(:blog).permit(:name, :description)
+          params.require(:blog).permit(:name, :description).merge({ user_id: current_user.id })
         end
     end
   end
