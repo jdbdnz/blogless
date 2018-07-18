@@ -1,23 +1,11 @@
-import axios from "axios";
-import { setPosts } from "../ducks/posts";
+import API from "./methods";
 
-const get = (dispatch, callback = () => {}) => {
-  axios
-    .get("/api/v1/posts.json")
-    .then(response => {
-      dispatch(setPosts(response.data));
-      callback();
-    })
-    .catch(error => console.log(error));
+const get = blog => {
+  return API.get("/api/v1/posts", { blog_id: blog.id });
 };
 
-const patch = (dispatch, post, callback = () => {}) => {
-  axios
-    .patch(`/api/v1/posts/${post.id}.json`, { post })
-    .then(response => {
-      callback();
-    })
-    .catch(error => console.log(error));
+const patch = post => {
+  return API.patch(`/api/v1/posts/${post.id}.json`, { post });
 };
 
 export default {
