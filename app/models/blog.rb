@@ -6,6 +6,7 @@ class Blog < ApplicationRecord
 
   def as_json(options={})
     {
+      id: self.id,
       name: self.name,
       description: self.description
     }
