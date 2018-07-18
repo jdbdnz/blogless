@@ -6,7 +6,7 @@ const Loading = () => (
     style={{
       fontSize: "3em",
       textAlign: "center",
-      lineHeight: "100vh"
+      lineHeight: "60vh"
     }}
   >
     <Icon type="loading" />

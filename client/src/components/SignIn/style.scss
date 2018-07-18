@@ -1,0 +1,15 @@
+.SignIn {
+  display: flex;
+  max-width: 600px;
+  padding: 10px;
+  margin: 0 auto;
+
+  .SignIn__form {
+    flex: 1;
+    margin: 0 -5px;
+
+    > * {
+      margin: 5px;
+    }
+  }
+}
