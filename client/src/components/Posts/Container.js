@@ -20,20 +20,24 @@ export class Posts extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const getPostsSuccess =
-      this.props.posts && prevProps.posts.length !== this.props.posts.length;
+    const getPostsSuccess = prevProps.posts.length !== this.props.posts.length;
     getPostsSuccess && this.setState({ initializing: false });
   }
 
-  getPosts = async () => {
-    const response = await API.posts.get(this.props.match.params.blog_id);
-
-    if (response.error) {
-      // TODO: handle error
-      this.setState({ initializing: false });
-    } else {
-      this.props.dispatch(setPosts(response));
-    }
+  getPosts = () => {
+    API.posts
+      .get(this.props.match.params.blog_id)
+      .then(response => {
+        if (response.length) {
+          this.props.dispatch(setPosts(response));
+        } else {
+          this.setState({ initializing: false });
+        }
+      })
+      .catch(error => {
+        // TODO: handle error
+        this.setState({ initializing: false });
+      });
   };
 
   render() {

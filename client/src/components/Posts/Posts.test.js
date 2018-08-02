@@ -12,7 +12,13 @@ import PostsPost from "./Post";
 import NoPosts from "./NoPosts";
 
 describe("<Posts />", () => {
-  beforeEach(() => moxios.install());
+  beforeEach(() => {
+    moxios.install();
+    window.localStorage = {
+      getItem: () => {},
+      setItem: () => {}
+    };
+  });
   afterEach(() => moxios.uninstall());
 
   describe("when there are Posts", () => {
@@ -57,18 +63,29 @@ describe("<Posts />", () => {
       })
     };
 
-    it("renders NoPosts", () => {
+    it("renders NoPosts", done => {
       const wrapper = mount(
         <Provider store={{ ...createStore(state => state, initialState) }}>
           <MemoryRouter>
-            <Posts />
+            <Posts match={{ params: { blog_id: "1" } }} />
           </MemoryRouter>
         </Provider>
       );
-
-      expect(wrapper.find(Posts)).to.have.length(1);
-      expect(wrapper.find(PostsPost)).to.have.length(0);
-      expect(wrapper.find(NoPosts)).to.have.length(1);
+      moxios.wait(() => {
+        let request = moxios.requests.mostRecent();
+        request
+          .respondWith({
+            status: 200,
+            response: []
+          })
+          .then(() => {
+            wrapper.update();
+            expect(wrapper.find(Posts)).to.have.length(1);
+            expect(wrapper.find(PostsPost)).to.have.length(0);
+            expect(wrapper.find(NoPosts)).to.have.length(1);
+            done();
+          });
+      });
     });
   });
 });
