@@ -19,7 +19,7 @@ class Presenter extends React.Component {
       <div>
         <header className="Header">
           <div>
-            <Link to="/">
+            <Link to={`/${post.blog_id}/posts`}>
               <Icon type="left" style={{ fontSize: "34px" }} />
             </Link>
           </div>

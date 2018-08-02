@@ -20,14 +20,15 @@ class PostContainer extends React.Component {
 
   patchToServer = debounce(() => {
     const id = this.props.post.id;
-    const callback = () => {
-      const action = updatePost({
-        id,
-        persistingStatus: undefined
-      });
-      this.props.dispatch(action);
-    };
-    API.posts.patch(this.props.dispatch, this.props.post, callback);
+    const response = API.posts.patch(this.props.post).then(() => {
+      if (!response.error) {
+        const action = updatePost({
+          id,
+          persistingStatus: undefined
+        });
+        this.props.dispatch(action);
+      }
+    });
   }, 500);
 
   componentDidUpdate() {

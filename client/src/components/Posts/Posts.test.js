@@ -1,4 +1,5 @@
 import React from "react";
+import moxios from "moxios";
 import { mount } from "enzyme";
 import { expect } from "chai";
 import { MemoryRouter } from "react-router-dom";
@@ -11,6 +12,9 @@ import PostsPost from "./Post";
 import NoPosts from "./NoPosts";
 
 describe("<Posts />", () => {
+  beforeEach(() => moxios.install());
+  afterEach(() => moxios.uninstall());
+
   describe("when there are Posts", () => {
     const initialState = {
       posts: fromJS({
@@ -34,7 +38,7 @@ describe("<Posts />", () => {
       const wrapper = mount(
         <Provider store={{ ...createStore(state => state, initialState) }}>
           <MemoryRouter>
-            <Posts />
+            <Posts match={{ params: { blog_id: "1" } }} />
           </MemoryRouter>
         </Provider>
       );
