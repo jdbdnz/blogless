@@ -43,11 +43,11 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         }.to change(User, :count).by(1)
       end
 
-      it "renders a JSON response with the new user" do
+      it "renders a JSON response with the new user's jwt" do
         post :create, params: {user: valid_attributes}
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(api_v1_user_url)
+        expect(JSON.parse(response.body).has_key? 'jwt').to be(true)
       end
     end
 
