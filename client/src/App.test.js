@@ -21,15 +21,16 @@ describe("<App />", () => {
   });
   afterEach(() => moxios.uninstall());
 
-  const dispatch = spy();
-  const initialState = {
-    posts: fromJS({ posts: [], filter: "" }),
-    user: fromJS({ user: {} })
-  };
-  const reducer = state => state;
-  const store = { ...createStore(reducer, initialState), dispatch };
-
   describe("when a user is not present", () => {
+    const dispatch = spy();
+    const initialState = {
+      blogs: fromJS({ blogs: [] }),
+      posts: fromJS({ posts: [], filter: "" }),
+      user: fromJS({ user: {} })
+    };
+    const reducer = state => state;
+    const store = { ...createStore(reducer, initialState), dispatch };
+
     it("prompts sign in", () => {
       const wrapper = mount(
         <Provider store={store}>
@@ -41,13 +42,22 @@ describe("<App />", () => {
   });
 
   describe("when a user is present", () => {
-    it("prompts to see posts", () => {
+    const dispatch = spy();
+    const initialState = {
+      blogs: fromJS({ blogs: [] }),
+      posts: fromJS({ posts: [], filter: "" }),
+      user: fromJS({ user: { id: 2, email: "hi@blogless.com" } })
+    };
+    const reducer = state => state;
+    const store = { ...createStore(reducer, initialState), dispatch };
+
+    it("displays blog management", () => {
       const wrapper = mount(
         <Provider store={store}>
           <App />
         </Provider>
       );
-      expect(wrapper.text().includes("Posts")).to.be.true;
+      expect(wrapper.text().includes("New Blog")).to.be.true;
     });
   });
 });

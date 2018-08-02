@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "antd";
 import { Link } from "react-router-dom";
 
 import Blog from "./Blog";
@@ -8,6 +9,7 @@ const Home = props => {
     props.blogs && props.blogs.map(blog => <Blog key={blog.id} blog={blog} />);
   return (
     <div>
+      <Button style={{ float: "right" }}>New Blog</Button>
       <h1>Welcome to Blogless</h1>
       {props.hasUser ? (
         blogs
