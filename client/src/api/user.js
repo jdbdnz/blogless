@@ -1,15 +1,9 @@
 import API from "./methods";
 
-const get = jwt => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${jwt}`
-    }
-  };
-
-  return API.get("/api/v1/user", config);
-};
+const get = () => API.get("/api/v1/user");
+const post = user => API.post("/api/v1/user", user);
 
 export default {
-  get
+  get,
+  post
 };

@@ -5,22 +5,21 @@ import { expect } from "chai";
 import { mount } from "enzyme";
 import { spy } from "sinon";
 import { Provider } from "react-redux";
-import { CookiesProvider, Cookies } from "react-cookie";
 import { createStore } from "redux";
 import { fromJS } from "immutable";
 
 import App from "./App";
 import Loading from "./components/Loading";
-import { JWT_COOKIE_NAME } from "./ducks/user";
 
 describe("<App />", () => {
-  beforeEach(() => moxios.install());
+  beforeEach(() => {
+    moxios.install();
+    window.localStorage = {
+      getItem: () => {},
+      setItem: () => {}
+    };
+  });
   afterEach(() => moxios.uninstall());
-
-  const cookieHandler = new Cookies();
-  const setCookie = () => {
-    cookieHandler.set(JWT_COOKIE_NAME, "12345", { path: "/" });
-  };
 
   const dispatch = spy();
   const initialState = {
@@ -34,9 +33,7 @@ describe("<App />", () => {
     it("prompts sign in", () => {
       const wrapper = mount(
         <Provider store={store}>
-          <CookiesProvider>
-            <App />
-          </CookiesProvider>
+          <App />
         </Provider>
       );
       expect(wrapper.text().includes("Sign in")).to.be.true;
@@ -47,9 +44,7 @@ describe("<App />", () => {
     it("prompts to see posts", () => {
       const wrapper = mount(
         <Provider store={store}>
-          <CookiesProvider>
-            <App />
-          </CookiesProvider>
+          <App />
         </Provider>
       );
       expect(wrapper.text().includes("Posts")).to.be.true;

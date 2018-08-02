@@ -8,7 +8,7 @@ const create = ({ email, password }) => {
     }
   };
 
-  return API.create("/api/v1/user/token", credentials);
+  return API.post("/api/v1/user/token", credentials);
 };
 
 export default {

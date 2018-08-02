@@ -1,17 +1,19 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { withCookies, Cookies } from "react-cookie";
-import PropTypes from "prop-types";
 
 import API from "./api";
-import { selector, setUser, JWT_COOKIE_NAME } from "./ducks/user";
+import { selector, setUser } from "./ducks/user";
 
 import Loading from "./components/Loading";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 import Posts from "./components/Posts";
 import Post from "./components/Post";
+
+const publicRoutes = ["/", "/sign-in", "/sign-up"];
 
 export class App extends Component {
   constructor(props) {
@@ -23,9 +25,10 @@ export class App extends Component {
     if (this.props.hasUser) {
       this.setState({ initializing: false });
     } else {
-      const jwt = this.props.cookies.get(JWT_COOKIE_NAME);
+      // TODO: store jwt in httpOnly cookie to avoid xss vulnerability
+      const jwt = window.localStorage.getItem("jwt");
       if (jwt) {
-        this.setState({ jwt });
+        this.getUser();
       } else {
         this.setState({ initializing: false });
       }
@@ -33,27 +36,23 @@ export class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const hasNewJwt = this.state.jwt && prevState.jwt !== this.state.jwt;
-    hasNewJwt && this.getUser();
-
     const loginSuccess = this.props.user && prevProps.user !== this.props.user;
     loginSuccess && this.setState({ initializing: false });
   }
 
   getUser = async () => {
-    const response = await API.user.get(this.state.jwt);
-
-    if (response.error) {
-      this.props.cookies.remove(JWT_COOKIE_NAME);
-      this.setState({ initializing: false });
-    } else {
+    try {
+      const response = await API.user.get();
       this.props.dispatch(setUser(response));
+    } catch (e) {
+      window.localStorage.removeItem("jwt");
+      this.setState({ initializing: false });
     }
   };
 
   onAuthSuccess = jwt => {
-    this.props.cookies.set(JWT_COOKIE_NAME, jwt, { path: "/" });
-    this.setState({ jwt });
+    window.localStorage.setItem("jwt", jwt);
+    this.getUser();
   };
 
   render() {
@@ -61,22 +60,30 @@ export class App extends Component {
       return <Loading />;
     }
 
+    const redirectToSignIn =
+      !this.props.hasUser &&
+      publicRoutes.indexOf(window.location.pathname) === -1;
+
     return (
       <Router>
         <div className="App">
           <div className="container">
+            {redirectToSignIn && <Redirect to="/sign-in" />}
             <Route exact path="/" component={Home} />
-            {this.props.hasUser && (
-              <Route exact path="/posts/:id" component={Post} />
-            )}
-            {this.props.hasUser && (
-              <Route exact path="/posts" component={Posts} />
-            )}
+            <Route exact path="/post/:id" component={Post} />
+            <Route exact path="/:blog_id/posts" component={Posts} />
             <Route
               exact
               path="/sign-in"
               render={routeProps => (
                 <SignIn {...routeProps} onSuccess={this.onAuthSuccess} />
+              )}
+            />
+            <Route
+              exact
+              path="/sign-up"
+              render={routeProps => (
+                <SignUp {...routeProps} onSuccess={this.onAuthSuccess} />
               )}
             />
           </div>
@@ -85,10 +92,6 @@ export class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  cookies: PropTypes.instanceOf(Cookies).isRequired
-};
 
 const mapStateToProps = state => {
   const user = selector.getUser(state);
@@ -100,4 +103,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withCookies(App));
+export default connect(mapStateToProps)(App);
