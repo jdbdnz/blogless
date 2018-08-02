@@ -32,7 +32,7 @@ export class Home extends React.Component {
       // TODO: handle error
       this.setState({ initializing: false });
     } else {
-      this.props.dispatch(setBlogs(response.data));
+      this.props.dispatch(setBlogs(response));
     }
   };
 

@@ -10,7 +10,8 @@ const authConfig = () => {
   );
 };
 
-export const get = url => axios.get(url, authConfig());
+export const get = url =>
+  axios.get(url, authConfig()).then(response => response.data);
 export const post = (url, data) =>
   axios.post(url, data, authConfig()).then(response => response.data);
 export const patch = (url, data) =>

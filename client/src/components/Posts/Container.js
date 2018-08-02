@@ -32,7 +32,7 @@ export class Posts extends React.Component {
       // TODO: handle error
       this.setState({ initializing: false });
     } else {
-      this.props.dispatch(setPosts(response.data));
+      this.props.dispatch(setPosts(response));
     }
   };
 
