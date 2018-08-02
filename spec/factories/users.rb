@@ -4,7 +4,7 @@ FactoryBot.define do
     password 'verysecurepassword'
 
     factory :fake_user do
-      email { "#{Faker::HeyArnold.character}@blogless.co" }
+      email { "#{Faker::HeyArnold.character.parameterize}@blogless.co" }
       password 'impossibletoguess'
     end
   end
