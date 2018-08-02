@@ -6,8 +6,7 @@ describe("getUser", () => {
   it("gets the user", () => {
     const user = {
       id: 1,
-      email: "howdy@blogless.co",
-      jwt: "12345"
+      email: "howdy@blogless.co"
     };
     const state = { user: fromJS({ user }) };
     const result = getUser(state);

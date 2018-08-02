@@ -4,8 +4,6 @@ import { createDuck } from "redux-duck";
 import { getUser, hasUser } from "./selectors/user";
 import setUserReducer from "./reducers/setUser";
 
-export const JWT_COOKIE_NAME = "token-auth-jwt";
-
 // DUCK
 const { defineType, createAction, createReducer } = createDuck("posts");
 
