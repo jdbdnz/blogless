@@ -9,7 +9,7 @@ import "./style.css";
 const Presenter = props => (
   <div>
     <Header />
-    <Filter />
+    {props.posts.length > 10 && <Filter />}
     <div className="Posts">
       {props.posts.length ? (
         props.posts.map(post => <Post key={post.id} post={post} />)
