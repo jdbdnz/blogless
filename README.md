@@ -30,14 +30,15 @@ Firstly, it's for me: I want to use a CDN to serve my blog, but I don't want to 
 1.  build your own template. From scratch, or using a boiler plate (a node package to create this would be cool)
 1.  Literally anything you like, it's an API after all
 
-## Is it ready yet?
+## Where do I sign up?
 
-No, sorry! If you'd like to see it happen sooner, consider contributing.
+Unfortunately it's still too incomplete to launch. Tweet me encouragement to make it happen faster @jdbdnz or feel free to contribute
 
 ## Running locally
 
 1.  Ensure `ruby`, `bundler`, `npm`, and `yarn` are installed
-1.  `bundle install` && `cd client` && `yarn install`
+1.  Install dependencies `bundle install` && `cd client` && `yarn install`
+1.  Generate a secret key by deleting `config/credentials.yml.enc` then running `EDITOR=vim rails credentials:edit` (this will generate a new encrypted `credentials.yml.enc` as well as an unversioned `master.key` used to decrypt it).
 1.  In separate terminals
     1.  `rails s -p 3001`
     1.  `yarn start`
